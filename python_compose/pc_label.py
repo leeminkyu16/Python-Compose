@@ -3,26 +3,25 @@ import typing
 import customtkinter
 
 from python_compose.pc_base_class_wrapper import PcBaseClassWrapper
-from python_compose.variables.pc_boolean_var import PcBooleanVar
-from python_compose.variables.pc_string_var import PcStringVar
 from python_compose.pc_style_bundle import PcStyleBundle
+from python_compose.variables.pc_observable_bool import PcObservableBool
+from python_compose.variables.pc_string_var import PcStringVar
 
 
 def pc_label(
 	style_bundle: PcStyleBundle,
 	parent: typing.Any,
 	string_var: typing.Optional[PcStringVar] = None,
-	active: typing.Optional[PcBooleanVar] = None,
+	active: typing.Optional[PcObservableBool] = None,
 ) -> PcBaseClassWrapper:
 	if active is None:
-		active = PcBooleanVar(default_bool=True)
+		active = PcObservableBool(value=True)
 	if string_var is None:
 		string_var = PcStringVar()
 
 	def create_widget():
 		if not active.get():
 			return None
-		active.set_parent(parent=parent)
 		string_var.set_parent(parent=parent)
 
 		return customtkinter.CTkLabel(
@@ -42,4 +41,5 @@ def pc_label(
 		widget=create_widget(),
 		style_bundle=style_bundle,
 		create_widget=create_widget,
+		active=active,
 	)

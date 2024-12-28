@@ -96,6 +96,7 @@ def pc_tk(
 				)
 
 		create_children()
+
 		initial_render = False
 
 		return c_tk

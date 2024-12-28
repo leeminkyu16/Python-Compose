@@ -6,22 +6,21 @@ import customtkinter
 from python_compose.helpers.create_child_helper import create_child_helper
 from python_compose.pc_base_class_wrapper import PcBaseClassWrapper
 from python_compose.pc_style_bundle import PcStyleBundle
-from python_compose.variables.pc_boolean_var import PcBooleanVar
+from python_compose.variables.pc_observable_bool import PcObservableBool
 
 
 def pc_column(
 	style_bundle: PcStyleBundle,
 	parent: typing.Any,
 	child_factories: typing.List[typing.Callable[[customtkinter.CTkBaseClass], PcBaseClassWrapper]],
-	active: typing.Optional[PcBooleanVar] = None,
+	active: typing.Optional[PcObservableBool] = None,
 ) -> PcBaseClassWrapper:
 	if active is None:
-		active = PcBooleanVar(default_bool=True)
+		active = PcObservableBool(value=True)
 
 	def create_widget():
 		if not active.get():
 			return None
-		active.set_parent(parent=parent)
 		new_column = customtkinter.CTkFrame(
 			master=parent,
 			width=200 if style_bundle.width is None else style_bundle.width,
@@ -64,6 +63,17 @@ def pc_column(
 					anchor=new_child.style_bundle.anchor,
 				)
 
+				def on_change(new_value: bool):
+					if new_value:
+						for child in children:
+							child.widget.pack_forget()
+						children.clear()
+						create_children()
+					else:
+						new_child.widget.pack_forget()
+
+				new_child.active.add_on_change(on_change=on_change)
+
 			if style_bundle.width is None:
 				new_column.configure(width=max_width)
 			if style_bundle.height is None:
@@ -76,4 +86,5 @@ def pc_column(
 		widget=create_widget(),
 		style_bundle=style_bundle,
 		create_widget=create_widget,
+		active=active,
 	)

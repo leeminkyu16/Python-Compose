@@ -63,6 +63,17 @@ def pc_row(
 					anchor=new_child.style_bundle.anchor,
 				)
 
+				def on_change(new_value: bool):
+					if new_value:
+						for child in children:
+							child.widget.pack_forget()
+						children.clear()
+						create_children()
+					else:
+						new_child.widget.pack_forget()
+
+				new_child.active.add_on_change(on_change=on_change)
+
 			if style_bundle.width is None:
 				new_row.configure(width=total_width)
 			if style_bundle.height is None:
@@ -75,5 +86,6 @@ def pc_row(
 		widget=create_widget(),
 		style_bundle=style_bundle,
 		create_widget=create_widget,
+		active=active,
 	)
 

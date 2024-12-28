@@ -20,15 +20,15 @@ def create_child_helper(
 	def on_change(new_value: bool):
 		if new_value:
 			for child in children:
-				child.widget.pack_forget()
+				child.destroy()
 			children.clear()
 			create_children()
 		else:
 			weak_new_child = new_child_weak_ref()
+			if weak_new_child is not None and weak_new_child.widget is not None:
+				weak_new_child.destroy()
 			if weak_new_child in children:
 				children.remove(weak_new_child)
-			if weak_new_child is not None and weak_new_child.widget is not None:
-				weak_new_child.widget.pack_forget()
 
 	new_child.active.clear_on_change()
 	unsubscribe = new_child.active.add_on_change(on_change=on_change)

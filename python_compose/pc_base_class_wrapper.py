@@ -46,3 +46,12 @@ class PcBaseClassWrapper:
 		elif isinstance(pad_y, int):
 			height += pad_y * 2
 		return height
+
+	def destroy(self):
+		if self.widget is not None:
+			self.widget.pack_forget()
+			self.widget.destroy()
+		del self.widget
+		del self.style_bundle
+		del self.active
+		del self.create_widget

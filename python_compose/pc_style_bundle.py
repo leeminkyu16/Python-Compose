@@ -27,6 +27,8 @@ class PcStyleBundle:
 			"n", "s", "w", "e", "nw", "sw", "ne", "se", "ns", "ew", "nsew", "center",
 		] = customtkinter.CENTER
 		self.justify: typing.Literal["left", "center", "right"] = customtkinter.CENTER
+		self.checkbox_width: typing.Optional[int] = None
+		self.checkbox_height: typing.Optional[int] = None
 
 	def set_pad_x(self, pad_x: typing.Union[int, typing.Tuple[int, int]]) -> typing.Self:
 		self.pad_x = pad_x
@@ -106,7 +108,10 @@ class PcStyleBundle:
 		self.text_color_disabled = text_color_disabled
 		return self
 
-	def set_font(self, font: typing.Optional[typing.Union[tuple, customtkinter.CTkFont]]) -> typing.Self:
+	def set_font(
+		self,
+		font: typing.Optional[typing.Union[tuple, customtkinter.CTkFont]],
+	) -> typing.Self:
 		self.font = font
 		return self
 
@@ -122,4 +127,18 @@ class PcStyleBundle:
 		justify: typing.Literal["left", "center", "right"],
 	) -> typing.Self:
 		self.justify = justify
+		return self
+
+	def set_checkbox_width(
+		self,
+		checkbox_width: typing.Optional[int],
+	) -> typing.Self:
+		self.checkbox_width = checkbox_width
+		return self
+
+	def set_checkbox_height(
+		self,
+		checkbox_height: typing.Optional[int],
+	) -> typing.Self:
+		self.checkbox_height = checkbox_height
 		return self
