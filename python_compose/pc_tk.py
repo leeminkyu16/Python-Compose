@@ -84,6 +84,7 @@ def pc_tk(
 						)
 					)
 				)
+				c_tk.focus()
 			else:
 				c_tk.geometry(
 					"".join(

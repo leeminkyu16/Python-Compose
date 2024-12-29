@@ -42,6 +42,11 @@ def pc_scrollable_frame(
 		def create_children():
 			max_width = 0
 			max_height = 0
+
+			for finalizers in list_of_finalize:
+				finalizers.detach()
+			list_of_finalize.clear()
+
 			for child_factory in child_factories:
 				# noinspection PyTypeChecker
 				new_child = create_child_helper(
@@ -84,17 +89,6 @@ def pc_scrollable_frame(
 				else:
 					raise ValueError()
 
-				def on_change(new_value: bool):
-					if new_value:
-						for child in children:
-							child.widget.pack_forget()
-						children.clear()
-						create_children()
-					else:
-						new_child.widget.pack_forget()
-
-				new_child.active.add_on_change(on_change=on_change)
-
 			if style_bundle.width is None and orientation == "vertical":
 				scrollable_frame.configure(width=max_width)
 			elif style_bundle.height is None and orientation == "horizontal":
@@ -103,8 +97,10 @@ def pc_scrollable_frame(
 		create_children()
 		# To enforce set height or width
 		if orientation == "vertical":
+			# noinspection PyProtectedMember
 			scrollable_frame._scrollbar.configure(height=0)
 		else:
+			# noinspection PyProtectedMember
 			scrollable_frame._scrollbar.configure(width=0)
 		return scrollable_frame
 

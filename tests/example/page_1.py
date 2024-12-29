@@ -14,6 +14,7 @@ def page_1(
 	parent: typing.Any,
 	active: PcObservableBool,
 ):
+	# noinspection PyShadowingNames
 	return pc_column(
 		style_bundle=PcStyleBundle()
 		.set_pad_y((0, 8)),

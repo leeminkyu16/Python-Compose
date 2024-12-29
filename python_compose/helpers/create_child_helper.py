@@ -31,10 +31,7 @@ def create_child_helper(
 				children.remove(weak_new_child)
 
 	new_child.active.clear_on_change()
-	unsubscribe = new_child.active.add_on_change(on_change=on_change)
-	for finalizers in list_of_finalize:
-		finalizers.detach()
-	list_of_finalize.clear()
-	list_of_finalize.append(weakref.finalize(parent, unsubscribe))
+	active_on_change_unsubscribe = new_child.active.add_on_change(on_change=on_change)
+	list_of_finalize.append(weakref.finalize(parent, active_on_change_unsubscribe))
 
 	return new_child

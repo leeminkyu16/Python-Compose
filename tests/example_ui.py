@@ -29,6 +29,7 @@ def example_ui():
 
 		return output_function
 
+	# noinspection PyShadowingNames
 	pc_tk(
 		style_bundle=PcStyleBundle()
 		.set_width(512)

@@ -39,7 +39,8 @@ def pc_textbox(
 			font=style_bundle.font,
 		)
 
-		def on_string_var_change(var_name, var_index, mode):
+		# noinspection PyUnusedLocal
+		def on_string_var_change(var_name: str, var_index: str, mode: str):
 			textbox.delete("0.0", "end")
 			textbox.insert("0.0", string_var.get())
 
