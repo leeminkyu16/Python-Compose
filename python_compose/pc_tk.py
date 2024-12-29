@@ -6,13 +6,18 @@ import customtkinter
 from python_compose.helpers.create_child_helper import create_child_helper
 from python_compose.pc_base_class_wrapper import PcBaseClassWrapper
 from python_compose.pc_style_bundle import PcStyleBundle
+from python_compose.variables.pc_observable import PcObservable
 
 
 def pc_tk(
 	style_bundle: PcStyleBundle,
 	title: str,
-	child_factories: typing.List[typing.Callable[[customtkinter.CTk], PcBaseClassWrapper]]
+	child_factories: typing.List[typing.Callable[[customtkinter.CTk], PcBaseClassWrapper]],
+	observed_vars: typing.Optional[typing.List[PcObservable]] = None,
 ):
+	if observed_vars is None:
+		observed_vars = []
+
 	def create_widget():
 		c_tk = customtkinter.CTk(
 			fg_color=style_bundle.fg_color,
@@ -36,6 +41,7 @@ def pc_tk(
 					children=children,
 					list_of_finalize=list_of_finalize,
 					create_children=create_children,
+					observed_vars=observed_vars,
 				)
 
 				if new_child is None or new_child.widget is None:

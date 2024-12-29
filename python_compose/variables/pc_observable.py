@@ -19,7 +19,7 @@ class PcObservable[T](abc.ABC):
 	def clear_on_change(self) -> None:
 		self.on_change.clear()
 
-	def add_on_change(self, on_change: typing.Callable[[T], None]):
+	def add_on_change(self, on_change: typing.Callable[[T], None]) -> typing.Callable[[], None]:
 		self.on_change.add(on_change)
 
 		weak_self_ref = weakref.ref(self)
