@@ -3,6 +3,7 @@ import weakref
 
 import customtkinter
 
+from python_compose.helpers.clear_list_of_finalize import clear_list_of_finalize
 from python_compose.helpers.create_child_helper import create_child_helper
 from python_compose.pc_base_class_wrapper import PcBaseClassWrapper
 from python_compose.variables.pc_observable import PcObservable
@@ -41,9 +42,7 @@ def pc_row(
 			total_width = 0
 			max_height = 0
 
-			for finalizers in list_of_finalize:
-				finalizers.detach()
-			list_of_finalize.clear()
+			clear_list_of_finalize(list_of_finalize)
 
 			for child_factory in child_factories:
 				new_child = create_child_helper(

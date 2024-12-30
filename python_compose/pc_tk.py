@@ -4,6 +4,7 @@ import weakref
 import customtkinter
 
 from python_compose.helpers.create_child_helper import create_child_helper
+from python_compose.helpers.clear_list_of_finalize import clear_list_of_finalize
 from python_compose.pc_base_class_wrapper import PcBaseClassWrapper
 from python_compose.pc_style_bundle import PcStyleBundle
 from python_compose.variables.pc_observable import PcObservable
@@ -33,6 +34,9 @@ def pc_tk(
 		def create_children():
 			total_height = 0
 			max_width = 0
+
+			clear_list_of_finalize(list_of_finalize)
+
 			for child_factory in child_factories:
 				# noinspection PyTypeChecker
 				new_child = create_child_helper(

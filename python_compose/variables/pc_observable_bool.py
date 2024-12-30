@@ -19,5 +19,5 @@ class PcObservableBool(PcObservable[bool]):
 	def clear_on_change(self) -> None:
 		super().clear_on_change()
 
-	def add_on_change(self, on_change: typing.Callable[[bool], None]):
-		super().add_on_change(on_change)
+	def add_on_change(self, on_change: typing.Callable[[bool], None]) -> typing.Callable[[], None]:
+		return super().add_on_change(on_change)
