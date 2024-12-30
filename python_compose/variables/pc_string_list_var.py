@@ -8,20 +8,23 @@ class PcStringListVar:
 		self,
 		default_value: str = "",
 	):
+		# A dict is used instead of a list to allow for sparse indexing
 		self._value: typing.Dict[int, PcStringVar] = {}
 		self.default_value: str = default_value
+		self.next_available_index = 0
 
 	def get(self, index: int) -> str:
 		return self._value[index].get()
 
 	def generate_var(self, default_value: typing.Optional[str] = None) -> int:
-		index = len(self._value)
+		current_index = self.next_available_index
+		self.next_available_index += 1
 
-		self._value[index] = PcStringVar(
+		self._value[current_index] = PcStringVar(
 			default_string=default_value if default_value is not None else self.default_value,
 		)
 
-		return index
+		return current_index
 
 	def remove(self, index: int):
 		self._value.pop(index)
