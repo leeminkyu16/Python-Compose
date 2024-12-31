@@ -29,7 +29,7 @@ class PcStringListVar:
 	def remove(self, index: int):
 		self._value.pop(index)
 
-	def get_all_string_vars(self) -> typing.List[PcStringVar]:
+	def get_string_vars(self) -> typing.List[PcStringVar]:
 		return list(
 			map(
 				lambda x: x[1],
@@ -39,7 +39,14 @@ class PcStringListVar:
 			)
 		)
 
-	def get_all_strings(self) -> typing.List[str]:
+	def get_key_string_var_pairs(self) -> typing.List[typing.Tuple[int, PcStringVar]]:
+		return list(
+			sorted(
+				self._value.items(), key=lambda x: x[0]
+			)
+		)
+
+	def get_strings(self) -> typing.List[str]:
 		return list(
 			map(
 				lambda x: x[1].get(),

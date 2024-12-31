@@ -16,14 +16,14 @@ class PcObservableStringListVar(PcStringListVar, PcObservable[typing.List[PcStri
 	def generate_var(self, default_value: typing.Optional[str] = None) -> int:
 		index = PcStringListVar.generate_var(self, default_value=default_value)
 		for func in self.on_change.copy():
-			func(self.get_all_string_vars())
+			func(self.get_string_vars())
 
 		return index
 
 	def remove(self, index: int):
 		PcStringListVar.remove(self, index)
 		for func in self.on_change.copy():
-			func(self.get_all_string_vars())
+			func(self.get_string_vars())
 
 	def set(self, new_value: typing.List[PcStringVar]) -> None:
 		self._value.clear()
