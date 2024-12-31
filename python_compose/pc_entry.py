@@ -55,5 +55,3 @@ def pc_entry(
 		create_widget=create_widget,
 		active=active,
 	)
-
-
